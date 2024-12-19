@@ -3,80 +3,8 @@ import { Link } from "react-router-dom";
 import NavbarLogin from "../../components/user/NavbarLogin";
 import Footer from "../../components/user/Footer";
 import CardProduct from "../../components/user/CardProduct";
-import { apiRequest, HTTP_METHODS, getUserSession } from "../../utils/utils";
-
-const Banner = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const banners = ["/assets/banner.jpeg", "/assets/banner2.jpeg"];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === banners.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [banners.length]);
-
-  useEffect(() => {
-    const fetchUserByUsername = async (username) => {
-      try {
-        const response = await apiRequest(
-          HTTP_METHODS.POST, 
-          `/api/users/username/${username}`
-        );
-        saveUserSession(response);
-        if (response.data.role == 'admin') {
-          window.location.href = "/dashboard";
-        }else{
-          window.location.href = "/home";
-        }
-        
-      } catch (err) {
-        console.error("Error fetching user:", err.response?.data?.data?.message || "Something went wrong.");
-      }
-    };
-  
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
-    const username = params.get("username");
-  
-    if (token && username) {
-      localStorage.setItem("_token", token);
-      fetchUserByUsername(username); 
-    }
-
-    const usersession = getUserSession();
-
-    if (usersession && usersession.role == 'admin') {
-      window.location.href = "/dashboard";
-    } else if (usersession && usersession.role == 'user') {
-      window.location.href = "/home";
-    }
-
-  }, []);  
-
-  return (
-    <div className="relative">
-      <img
-        src={banners[currentIndex]}
-        alt={`Banner ${currentIndex + 1}`}
-        className="w-full rounded-lg transition-all duration-700"
-      />
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-        {banners.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full ${
-              currentIndex === index ? "bg-black" : "bg-gray-400"
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          ></button>
-        ))}
-      </div>
-    </div>
-  );
-};
+import Banner from "../../components/user/Banner"; // Import the Banner component
+import { apiRequest, HTTP_METHODS } from "../../utils/utils";
 
 const Beranda = () => {
   const [products, setProducts] = useState([]);
@@ -158,23 +86,33 @@ const Beranda = () => {
 
   return (
     <>
-     <NavbarLogin />
+      <NavbarLogin />
       <main className="bg-gray-100">
         {/* Search Bar */}
         <div className="py-6 shadow-sm">
-          <div className="container mx-auto px-4 flex flex-col md:flex-row gap-4">
+          <div className="container mx-auto px-4 flex items-center justify-center gap-4">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="What are you looking for?"
-              className="w-full p-2 border rounded-lg"
+              className="w-full md:w-1/2 p-2 border border-gray-300 rounded-l-lg"
             />
+            <button
+              className="bg-black text-white px-4 py-2 rounded-r-lg"
+              onClick={filterProducts}
+            >
+              Search
+            </button>
           </div>
         </div>
 
         {/* Banner */}
-        {!searchQuery && <Banner />}
+        {!searchQuery && (
+          <section className="container mx-auto px-8 mt-4">
+            <Banner />
+          </section>
+        )}
 
         {/* Categories Section */}
         <section className="container mx-auto px-8 py-10">

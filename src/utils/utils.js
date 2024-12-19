@@ -7,11 +7,13 @@ export const HTTP_METHODS = {
   DELETE: 'DELETE',
 };
 
+const BASE_URL = 'https://backend-ecommerce-production-6069.up.railway.app'; 
+
 const createAxiosInstance = () => {
   const token = localStorage.getItem('_token');
 
   const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },

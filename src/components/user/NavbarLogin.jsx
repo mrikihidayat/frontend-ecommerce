@@ -36,7 +36,7 @@ const NavbarLogin = () => {
   return (
     <header className="bg-black text-white py-4">
       <div className="container mx-auto flex justify-between items-center px-8">
-        <img src="/src/assets/logo.png" alt="Logo" className="h-10 mr-3" />
+        <img src="/public/logo.png" alt="Logo" className="h-10 mr-3" />
         
         <button
           onClick={handleMobileMenuToggle}

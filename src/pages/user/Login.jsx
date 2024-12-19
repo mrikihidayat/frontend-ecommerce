@@ -53,7 +53,7 @@ const Login = () => {
         <div className="flex flex-col lg:flex-row w-11/12 lg:w-3/4 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="hidden lg:flex w-1/2 items-center justify-center bg-gray-100">
             <img
-              src="/src/assets/mockup2.png"
+              src="/public/mockup2.png"
               alt="Login Illustration"
               className="w-3/4"
             />

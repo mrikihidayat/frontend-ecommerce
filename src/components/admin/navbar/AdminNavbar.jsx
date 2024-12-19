@@ -29,7 +29,7 @@ function AdminNavbar() {
     <div className="flex justify-between items-center bg-black px-4 py-3 shadow-md text-white">
       {/* Logo */}
       <div>
-        <img src="/src/assets/logo.png" alt="Logo" className="h-10 w-10" />
+        <img src="/public/logo.png" alt="Logo" className="h-10 w-10" />
       </div>
 
       {/* Profile */}
